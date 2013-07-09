@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="wwsPlayer">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/angular/angular.js"></script>
+        <script type="text/javascript" src="js/audio5js/audio5.js"></script>
+        <script type="text/javascript" src="js/audio5js/ngAudio5.js"></script>
+      <script type="text/javascript" src="js/player.js"></script>
+    </head>
+    <body>
+
+        <div ng-controller="playerController">
+          <button ng-click="next()">next</button>
+          <player source="source">
+            <button ng-click="player.playPause()">play/pause</button>
+            <button ng-click="player.reset()">stop</button>
+            <div>position: {{position}}</div>
+            <div>duration: {{duration}}</div>
+          </player>
+        </div>
+
+    </body>
+</html>

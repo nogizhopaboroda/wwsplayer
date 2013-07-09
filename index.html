@@ -11,12 +11,9 @@
     <body>
 
         <div ng-controller="playerController">
-          <button ng-click="next()">next</button>
           <player source="source">
-            <button ng-click="player.playPause()">play/pause</button>
-            <button ng-click="player.reset()">stop</button>
-            <div>position: {{position}}</div>
-            <div>duration: {{duration}}</div>
+            <button ng-click="next()">next</button>
+            <div>{{source}}</div>
           </player>
         </div>
 

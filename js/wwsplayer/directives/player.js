@@ -1,12 +1,3 @@
-var wwsplayer = angular.module('wwsPlayer', ['Audio5']);
-
-wwsplayer.controller('playerController', ['$scope', 'AudioService', function($scope, AudioService){
-  $scope.source = "files/1.mp3";
-  $scope.next = function(){
-    $scope.source = "files/2.mp3";
-  };
-}]);
-
 wwsplayer.directive('player', function(AudioService){
   return {
     restrict: 'EA',
@@ -15,10 +6,10 @@ wwsplayer.directive('player', function(AudioService){
     },
     template: '' +
       '<div ng-transclude>' +
-        '<button ng-click="player.playPause()">play/pause</button>' +
-        '<button ng-click="player.reset()">stop</button>' +
-        '<div>position: {{position}}</div>' +
-        '<div>duration: {{duration}}</div>'+
+      '<button ng-click="player.playPause()">play/pause</button>' +
+      '<button ng-click="player.reset()">stop</button>' +
+      '<div>position: {{position}}</div>' +
+      '<div>duration: {{duration}}</div>'+
       '</div>',
     replace: true,
     transclude: true,

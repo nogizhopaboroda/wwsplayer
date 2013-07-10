@@ -6,7 +6,9 @@
         <script type="text/javascript" src="js/angular/angular.js"></script>
         <script type="text/javascript" src="js/audio5js/audio5.js"></script>
         <script type="text/javascript" src="js/audio5js/ngAudio5.js"></script>
-      <script type="text/javascript" src="js/player.js"></script>
+        <script type="text/javascript" src="js/player.js"></script>
+        <script type="text/javascript" src="js/wwsplayer/controllers/playlist.js"></script>
+        <script type="text/javascript" src="js/wwsplayer/directives/sorted_list.js"></script>
     </head>
     <body>
 
@@ -15,6 +17,13 @@
             <button ng-click="next()">next</button>
             <div>{{source}}</div>
           </player>
+
+
+
+          <div ng-controller="playlistController">
+            <div class="" sorted-list items="songs" fields="fields"></div>
+          </div>
+
         </div>
 
     </body>

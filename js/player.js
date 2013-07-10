@@ -11,12 +11,15 @@ wwsplayer.directive('player', function(AudioService){
   return {
     restrict: 'EA',
     scope: {
-      'src': '=source'
+      'src': '@source'
     },
-    template: '<div ng-transclude><button ng-click="player.playPause()">play/pause</button>' +
-      '<button ng-click="player.reset()">stop</button>' +
-      '<div>position: {{position}}</div>' +
-      '<div>duration: {{duration}}</div></div>',
+    template: '' +
+      '<div ng-transclude>' +
+        '<button ng-click="player.playPause()">play/pause</button>' +
+        '<button ng-click="player.reset()">stop</button>' +
+        '<div>position: {{position}}</div>' +
+        '<div>duration: {{duration}}</div>'+
+      '</div>',
     replace: true,
     transclude: true,
     controller: function($scope, $element, $attrs, $transclude) {

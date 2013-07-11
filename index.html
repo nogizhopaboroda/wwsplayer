@@ -10,10 +10,16 @@
         <script type="text/javascript" src="js/wwsplayer/directives/player.js"></script>
         <script type="text/javascript" src="js/wwsplayer/controllers/playlist.js"></script>
         <script type="text/javascript" src="js/wwsplayer/directives/sorted_list.js"></script>
+        <script type="text/javascript" src="js/wwsplayer/directives/stratch_input.js"></script>
     </head>
     <body>
 
+
         <div ng-controller="playerController">
+
+          <input stretch-input ng-model="search" style="width: 130px;">
+          <span>sc: {{search.length}}</span>
+
           <player source="{{source}}">
             <button ng-click="next()">next</button>
             <div>{{source}}</div>

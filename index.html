@@ -3,6 +3,7 @@
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link media="screen" href="css/styles.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="js/angular/angular.js"></script>
         <script type="text/javascript" src="js/audio5js/audio5.js"></script>
         <script type="text/javascript" src="js/audio5js/ngAudio5.js"></script>
@@ -11,27 +12,37 @@
         <script type="text/javascript" src="js/wwsplayer/controllers/playlist.js"></script>
         <script type="text/javascript" src="js/wwsplayer/directives/sorted_list.js"></script>
         <script type="text/javascript" src="js/wwsplayer/directives/stratch_input.js"></script>
+        <script type="text/javascript" src="js/wwsplayer/directives/file_load.js"></script>
+        <script type="text/javascript" src="js/wwsplayer/directives/drag_drop.js"></script>
+        <script type="text/javascript" src="js/wwsplayer/directives/slider.js"></script>
     </head>
     <body>
+        <div ng-controller="playerController" class="player">
+
+            <player class="display" play="{{play}}" source="{{currentSong.src}}" playlist="songs">
+                <div class="cover"><img ng-src="{{currentSong.cover}}"></div>
+                <div class="button previous" ng-click="prevSong()"></div>
+                <div class="button next" ng-click="nextSong()"></div>
+                <div class="singer">{{currentSong.songer}} - {{currentSong.song}}</div>
+            </player>
+
+            <div class="search_panel">
+                <div class="search_field_block">
+                    <!--<div class="search_field_item"><div>soundtrack</div><div class="search_field_item_closer"></div></div>
+                    <div class="search_field_item"><div>2009</div><div class="search_field_item_closer"></div></div>-->
+                    <input class="search_field" stretch-input ng-model="search" style="width: 150px;" placeholder="Example: Someone">
+                </div>
+            </div>
 
 
-        <div ng-controller="playerController">
-
-          <input stretch-input ng-model="search" style="width: 130px;">
-          <span>sc: {{search.length}}</span>
-
-          <player source="{{source}}">
-            <button ng-click="next()">next</button>
-            <div>{{source}}</div>
-          </player>
-
-
-
-          <div ng-controller="playlistController">
-            <div class="" sorted-list items="songs" fields="fields"></div>
-          </div>
+            <div id="foo" ng-controller="playlistController" class="playlist_panel">
+                <div file-load class="" ng-model="loaded_files">
+                </div>
+                <div class="test" editable="true" sorted-list items="songs" fields="fields"></div>
+            </div>
 
         </div>
 
+        <script type="text/javascript" src="js/id3-minimized.js"></script>
     </body>
 </html>

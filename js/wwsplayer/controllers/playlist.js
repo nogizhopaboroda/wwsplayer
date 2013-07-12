@@ -1,46 +1,5 @@
 wwsplayer.controller('playlistController', ['$scope', function($scope){
-  $scope.fields = [
-    {
-      "name": "songer",
-      "label": "songer",
-      "searchable": true
-    },
-    {
-      "name": "song",
-      "label": "song",
-      "searchable": true
-    },
-    {
-      "name": "album",
-      "label": "album"
-    }
-  ];
-  $scope.songs = [
-    {
-      "songer": "songer1",
-      "song": "song1",
-      "album": "blabla",
-      "visible": true
-    },
-    {
-      "songer": "bla",
-      "song": "test",
-      "album": "blabla",
-      "visible": true
-    },
-    {
-      "songer": "songer3",
-      "song": "song3",
-      "album": "alb",
-      "visible": true
-    },
-    {
-      "songer": "bla",
-      "song": "test",
-      "album": "blabla",
-      "visible": true
-    }
-  ];
+
 
   var getSearchableFields = function(){
     var fields = [];
@@ -59,7 +18,94 @@ wwsplayer.controller('playlistController', ['$scope', function($scope){
     }
   };
 
+  $scope.addToPlaylist = function(){
+    $scope.songs.push({
+      "songer": "added",
+      "song": "added",
+      "album": "added",
+      "src": $scope.newSong,
+      "visible": true
+    });
+    $scope.newSong = "";
+  };
+
+  $scope.$watch('loaded_files', function(nv, ov){
+    if(angular.isUndefined(nv)) return;
+
+    function _arrayBufferToBase64( buffer ) {
+      var binary = '';
+      var bytes = new Uint8Array( buffer );
+      var len = bytes.byteLength;
+      for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] )
+      }
+      return window.btoa( binary );
+    }
+
+    for (var i = 0, f; f = nv[i]; i++) {
+
+      if (!f.type.match('audio.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      var url = f.urn || f.name;
+
+      reader.onload = (function(file){
+        return function(event) {
+          ID3.loadTags(url, function() {
+            var tags = ID3.getAllTags(url);
+
+            var base64String = _arrayBufferToBase64(event.target.result);
+            var base64Src = "data:" + file.type + ";base64," + base64String;
+            var image = tags.picture;
+
+            var new_song = {
+              "songer": tags.artist,
+              "song": tags.title,
+              "album": tags.album,
+              "src": base64Src,
+              "visible": true
+            };
+
+            if (image) {
+              new_song.cover = "data:" + image.format + ";base64," + Base64.encodeBytes(image.data);
+            }
+
+            $scope.$apply(function(){
+              $scope.songs.push(new_song);
+            });
+
+          }, {
+            tags: ["title","artist","picture","album"],
+            dataReader: FileAPIReader(file)
+          });
+        }
+      })(f);
+      reader.readAsArrayBuffer(f);
+    }
+  });
+
   $scope.$on('search:start', function(event, nv, ov){
     filterSongs(nv);
   });
+
+
+  $scope.$on('sortedList:ItemClick', function(event, item){
+    //do smth
+  });
+
+  $scope.$on('sortedList:ItemDblClick', function(event, item){
+    //do smth
+  });
+
+  $scope.$on('sortedList:RowClick', function(event, item){
+    //do smth
+  });
+
+  $scope.$on('sortedList:RowDblClick', function(event, item){
+
+  });
+
 }]);

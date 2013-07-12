@@ -852,6 +852,11 @@
       this.audio.seek(position);
       this.position = position;
     },
+    stop: function () {
+      this.audio.reset();
+      this.seek(0);
+      this.pause();
+    },
     /**
      * Callback for audio ready event. Indicates audio is ready for playback.
      * Looks for ready callback in settings object and invokes it in the context of player instance

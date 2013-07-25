@@ -1,3 +1,12 @@
+/* TODO: вынести это в сервис */
+window.attrs_map = {
+  "Location": "src",
+  "Name": "song",
+  "Artist": "songer",
+  "Album": "album"
+};
+
+
 wwsplayer.controller('playlistController', ['$scope', function($scope){
 
 
@@ -13,7 +22,7 @@ wwsplayer.controller('playlistController', ['$scope', function($scope){
     for(var i = 0; i < $scope.songs.length; i++){
       $scope.songs[i].visible = false;
       for(var l = 0; l < sf.length; l++){
-        if ($scope.songs[i][sf[l].name].indexOf(value) !== -1) $scope.songs[i].visible = true;
+        if ($scope.songs[i][sf[l].name] && $scope.songs[i][sf[l].name].indexOf(value) !== -1) $scope.songs[i].visible = true;
       }
     }
   };
@@ -44,6 +53,42 @@ wwsplayer.controller('playlistController', ['$scope', function($scope){
 
     for (var i = 0, f; f = nv[i]; i++) {
 
+      if (f.type.match('text/xml')) {
+        var reader = new FileReader();
+        reader.onload = (function(event){
+          var result = event.target.result;
+
+          /* TODO: правильные названия переменных! */
+
+          var oParser = new DOMParser();
+          var oDOM = oParser.parseFromString(result, "text/xml");
+
+          var a = oDOM.querySelectorAll('plist > dict > dict > dict');
+
+          for(var i = 0; i < a.length; i++){
+            var f = a[i].firstChild;
+            var song = {};
+            while(f.nextSibling){
+
+              var key = f.nextSibling;
+              var value = key.nextSibling;
+
+              //song[key.textContent] = value.textContent;
+
+              if(window.attrs_map[key.textContent]){
+                song[window.attrs_map[key.textContent]] = value.textContent
+              }
+
+              f = value.nextSibling;
+            }
+            song.visible = true;
+            $scope.$apply(function(){
+              $scope.songs.push(song);
+            });
+          }
+        });
+        reader.readAsText(f);
+      }
       if (!f.type.match('audio.*')) {
         continue;
       }

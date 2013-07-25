@@ -232,6 +232,9 @@ body {
   margin-top: 180px;
   width: 100%;
   font-size: 15px;
+  overflow-y: scroll;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .sorted_list {

@@ -10,3 +10,4 @@ Planes:
 5) Social networks integration
 6) Preload song to buffer
 7) Styling
+8) Better search and search API

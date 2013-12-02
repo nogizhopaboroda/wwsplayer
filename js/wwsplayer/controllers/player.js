@@ -28,6 +28,13 @@ wwsplayer.controller('playerController', ['$scope', '$timeout', function($scope,
       "src": "files/1.mp3",
       "cover": "img/cover.png",
       "visible": true
+    },
+    {
+      "songer": "local",
+      "song": "local",
+      "album": "local",
+      "src": "file://localhost/Users/nogizhopaboroda/Music/iTunes%20local/iTunes%20Media/Music/Unknown%20Artist/Unknown%20Album/11%20Mack%20the%20Knife.mp3",
+      "visible": true
     }
   ];
 
